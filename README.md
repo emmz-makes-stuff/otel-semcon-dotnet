@@ -11,16 +11,31 @@ Each package has attribute keys (`HttpAttributes.HttpRequestMethod`), well-known
 
 The package version matches the semantic conventions release it was generated from.
 
-## Regenerating
+## Building
 
-Requires Docker and `jq`.
+Requires the .NET 10 SDK, Docker, `jq` and `bash`. On Windows, use WSL or Git Bash.
 
 ```sh
-./scripts/generate.sh
 dotnet test
+dotnet pack -c Release
 ```
+
+The generated C# is not committed. The build runs `scripts/generate.sh`, which runs Weaver in Docker, whenever the code is missing or out of date. It's out of date when the templates, the script, `Package.props` or the semconv version have changed since the last run. You can also run `scripts/generate.sh` directly.
 
 - The semantic conventions version is `<SemanticConventionsVersion>` in `Directory.Build.props`.
 - The Weaver image is pinned in `scripts/generate.sh`.
 - Templates are in `templates/registry/dotnet`.
-- Generated code is committed under `src/*/Generated`.
+
+## Publishing your own packages
+
+To publish these packages under your own name, fork or clone this repository and edit **`Package.props`**:
+
+```xml
+<SemanticConventionsRootNamespace>Acme.OpenTelemetry.SemanticConventions</SemanticConventionsRootNamespace>
+<Authors>Acme</Authors>
+<RepositoryUrl>https://github.com/acme/otel-semcon-dotnet</RepositoryUrl>
+```
+
+That's the only change needed. The package IDs, assembly names and C# namespaces all come from `SemanticConventionsRootNamespace`, with `.Incubating` appended for the second package. The next build regenerates the code under the new name.
+
+Upstream doesn't change `Package.props`, and the generated code isn't committed, so a fork can keep pulling from upstream without conflicts.

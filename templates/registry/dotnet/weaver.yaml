@@ -1,11 +1,11 @@
-# Weaver target for Nova.OpenTelemetry.SemanticConventions.
+# Weaver target for the .NET semantic conventions packages.
 #
-# Run twice by scripts/generate.sh: once with `-D stable_only=true` into the stable
-# package and once with `-D stable_only=false` into the Incubating package.
+# Run once per project by scripts/generate.sh, which passes:
+#   stable_only      true for the stable package, false for the Incubating package
+#   root_namespace   <SemanticConventionsRootNamespace> from Package.props
+#   semconv_version  <SemanticConventionsVersion> from Directory.Build.props
 
 params:
-  stable_only: true
-  root_namespace: Nova.OpenTelemetry.SemanticConventions
   # Root namespaces that are specific to other language runtimes or platforms.
   excluded_namespaces: [android, cpython, go, ios, jvm, nodejs, v8js]
 

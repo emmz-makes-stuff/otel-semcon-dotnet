@@ -1,0 +1,54 @@
+<Project>
+
+  <PropertyGroup>
+    <_SemConvRepoRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..'))</_SemConvRepoRoot>
+    <_SemConvGeneratedDir>$(MSBuildProjectDirectory)/Generated/</_SemConvGeneratedDir>
+    <_SemConvStamp>$(_SemConvGeneratedDir).stamp</_SemConvStamp>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_SemConvGeneratorInput Include="$(_SemConvRepoRoot)templates/**/*" />
+    <_SemConvGeneratorInput Include="$(_SemConvRepoRoot)scripts/generate.sh" />
+    <_SemConvGeneratorInput Include="$(_SemConvRepoRoot)Package.props" />
+    <_SemConvGeneratorInput Include="$(_SemConvRepoRoot)Directory.Build.props" />
+  </ItemGroup>
+
+  <!--
+    Generated code is not committed. Run Weaver (via scripts/generate.sh, which needs Docker and
+    jq) whenever Generated/ is missing or older than the templates, script, package identity or
+    semconv version. Runs in the outer build before the per-framework builds start, and in a
+    single-framework build (dotnet build -f ...); the up-to-date check stops it running twice.
+  -->
+  <Target Name="GenerateSemanticConventions"
+          BeforeTargets="DispatchToInnerBuilds;BeforeBuild"
+          Inputs="@(_SemConvGeneratorInput)"
+          Outputs="$(_SemConvStamp)">
+    <Exec Command="bash &quot;$(_SemConvRepoRoot)scripts/generate.sh&quot; &quot;$(MSBuildProjectName)&quot;" />
+    <Touch Files="$(_SemConvStamp)" AlwaysCreate="true" />
+  </Target>
+
+  <!--
+    The Compile glob was evaluated before generation ran, so re-read it. A separate target
+    without Inputs/Outputs: MSBuild still applies a skipped target's item changes, which
+    would otherwise add the generated files twice. Paths are relative to match the default glob.
+  -->
+  <Target Name="_SemConvRefreshCompileItems" AfterTargets="GenerateSemanticConventions">
+    <ItemGroup>
+      <Compile Remove="Generated/**/*.cs" />
+      <Compile Include="Generated/**/*.cs" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Fills {{RootNamespace}} in PackageReadme.md and packs the result as README.md. -->
+  <Target Name="_SemConvPackageReadme" BeforeTargets="_GetPackageFiles">
+    <PropertyGroup>
+      <_SemConvReadme>$(IntermediateOutputPath)README.md</_SemConvReadme>
+      <_SemConvReadmeText>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/PackageReadme.md').Replace('{{RootNamespace}}', '$(SemanticConventionsRootNamespace)'))</_SemConvReadmeText>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(_SemConvReadme)" Lines="$([MSBuild]::Escape($(_SemConvReadmeText)))" Overwrite="true" WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <None Include="$(_SemConvReadme)" Pack="true" PackagePath="/" />
+    </ItemGroup>
+  </Target>
+
+</Project>

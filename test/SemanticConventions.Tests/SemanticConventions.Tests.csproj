@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <!-- The tests deliberately use obsolete definitions. -->
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/SemanticConventions/SemanticConventions.csproj" />
+    <ProjectReference Include="../../src/SemanticConventions.Incubating/SemanticConventions.Incubating.csproj" />
+  </ItemGroup>
+
+  <!-- The namespaces come from Package.props, so the test code never names them. -->
+  <ItemGroup>
+    <Using Include="$(SemanticConventionsRootNamespace)" />
+    <Using Include="$(SemanticConventionsRootNamespace).Incubating" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,8 @@
 <Project>
 
+  <!-- Package identity (root namespace, authors, repository): the one file forks change. -->
+  <Import Project="$(MSBuildThisFileDirectory)Package.props" />
+
   <PropertyGroup>
     <!-- The semantic conventions release the generated code is built from. scripts/generate.sh reads this. -->
     <SemanticConventionsVersion>1.44.0</SemanticConventionsVersion>
@@ -15,7 +18,6 @@
 
   <PropertyGroup>
     <Version>$(SemanticConventionsVersion)</Version>
-    <Authors>Emmz</Authors>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageTags>OpenTelemetry;SemanticConventions;semconv;Observability</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>

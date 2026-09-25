@@ -480,3 +480,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Weaver output: produced by scripts/generate.sh (the build runs it), never committed.
+src/*/Generated/

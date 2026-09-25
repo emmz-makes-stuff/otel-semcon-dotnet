@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Identity comes from Package.props at the repository root. -->
+  <PropertyGroup>
+    <AssemblyName>$(SemanticConventionsRootNamespace)</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <PackageId>$(AssemblyName)</PackageId>
+    <Description>Stable OpenTelemetry semantic conventions for .NET: attribute keys, well-known values, metric metadata and instrument factories, generated with OpenTelemetry Weaver.</Description>
+  </PropertyGroup>
+
+</Project>

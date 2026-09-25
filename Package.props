@@ -1,0 +1,17 @@
+<Project>
+
+  <!--
+    Package identity. If you fork or clone this repository to publish your own packages,
+    this is the only file you need to change.
+
+    SemanticConventionsRootNamespace is used as-is for the stable package's ID, assembly
+    name and C# namespace, and with ".Incubating" appended for the incubating package.
+  -->
+  <PropertyGroup>
+    <SemanticConventionsRootNamespace>Nova.OpenTelemetry.SemanticConventions</SemanticConventionsRootNamespace>
+    <Authors>Emmz</Authors>
+    <RepositoryUrl>https://github.com/emmz-makes-stuff/otel-semcon-dotnet</RepositoryUrl>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+  </PropertyGroup>
+
+</Project>
