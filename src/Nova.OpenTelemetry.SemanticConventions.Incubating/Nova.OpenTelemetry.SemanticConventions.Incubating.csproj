@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>All OpenTelemetry semantic conventions for .NET, including experimental and deprecated ones, generated with OpenTelemetry Weaver. Stable definitions are marked [Obsolete] and point to Nova.OpenTelemetry.SemanticConventions.</Description>
+  </PropertyGroup>
+
+</Project>

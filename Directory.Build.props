@@ -1,0 +1,24 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- The semantic conventions release the generated code is built from. scripts/generate.sh reads this. -->
+    <SemanticConventionsVersion>1.44.0</SemanticConventionsVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>$(SemanticConventionsVersion)</Version>
+    <Authors>Emmz</Authors>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageTags>OpenTelemetry;SemanticConventions;semconv;Observability</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+</Project>

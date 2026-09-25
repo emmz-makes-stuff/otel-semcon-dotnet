@@ -1,0 +1,52 @@
+{#- Shared macros for the C# templates. Not rendered on its own.
+    Block macros (xmldoc, obsolete_attribute) emit whole lines, each ending in a newline,
+    and nothing at all when empty, so callers can chain them in front of a declaration. -#}
+
+{#- Escapes text for use inside a regular C# string literal, on one line. -#}
+{% macro cs_string(text) -%}
+{{ text | trim | replace("\\", "\\\\") | replace("\"", "\\\"") | replace("\r", "") | replace("\n", " ") }}
+{%- endmacro %}
+
+{#- Text for an [Obsolete] message, from a `deprecated` object. -#}
+{% macro deprecation_message(deprecated) -%}
+{% if deprecated.note %}{{ cs_string(deprecated.note) }}{% elif deprecated.renamed_to %}Replaced by `{{ deprecated.renamed_to }}`.{% else %}Deprecated.{% endif %}
+{%- endmacro %}
+
+{#- Markdown from the registry rendered as XML doc content, prefixed with `/// ` and indented.
+    XML-special characters are escaped before rendering so code spans such as `<key>` stay
+    well-formed. HTML paragraphs and lists become their XML doc equivalents. -#}
+{% macro doc_text(text, indent) -%}
+{{ " " * indent }}{{ text
+  | replace("&", "&amp;") | replace("<", "&lt;") | replace(">", "&gt;")
+  | comment(indent=indent)
+  | replace("<p>", "<para>") | replace("</p>", "</para>")
+  | replace("<ul>", "<list type=\"bullet\">") | replace("</ul>", "</list>")
+  | replace("<ol>", "<list type=\"number\">") | replace("</ol>", "</list>")
+  | replace("<li>", "<item><description>") | replace("</li>", "</description></item>") }}
+{%- endmacro %}
+
+{#- XML doc summary (and remarks when there is a note). -#}
+{% macro xmldoc(brief, note, indent) %}
+{% set pad = " " * indent %}
+{{ pad }}/// <summary>
+{{ doc_text(brief, indent) }}
+{{ pad }}/// </summary>
+{% if note %}
+{{ pad }}/// <remarks>
+{{ doc_text(note, indent) }}
+{{ pad }}/// </remarks>
+{% endif %}
+{% endmacro %}
+
+{#- [Obsolete] for deprecated definitions, and for Incubating definitions that are already
+    stable. Unstable definitions are left unmarked: the Incubating package name says it.
+    `stable_location` is the fully qualified member in the stable package; pass none when
+    the definition has no stable home (e.g. a stable value of an unstable enum attribute). -#}
+{% macro obsolete_attribute(item, stable_only, stable_location, indent) %}
+{% set pad = " " * indent %}
+{% if item.deprecated %}
+{{ pad }}[Obsolete("{{ deprecation_message(item.deprecated) }}")]
+{% elif not stable_only and item.stability == "stable" and stable_location %}
+{{ pad }}[Obsolete("Use {{ stable_location }} instead.")]
+{% endif %}
+{% endmacro %}

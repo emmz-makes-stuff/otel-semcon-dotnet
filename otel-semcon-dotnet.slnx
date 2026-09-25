@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Nova.OpenTelemetry.SemanticConventions.Incubating/Nova.OpenTelemetry.SemanticConventions.Incubating.csproj" />
+    <Project Path="src/Nova.OpenTelemetry.SemanticConventions/Nova.OpenTelemetry.SemanticConventions.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/Nova.OpenTelemetry.SemanticConventions.Tests/Nova.OpenTelemetry.SemanticConventions.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Stable OpenTelemetry semantic conventions for .NET: attribute keys and well-known values, generated with OpenTelemetry Weaver.</Description>
+  </PropertyGroup>
+
+</Project>

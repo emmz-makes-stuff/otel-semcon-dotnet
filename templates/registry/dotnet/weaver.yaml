@@ -1,0 +1,42 @@
+# Weaver target for Nova.OpenTelemetry.SemanticConventions.
+#
+# Run twice by scripts/generate.sh: once with `-D stable_only=true` into the stable
+# package and once with `-D stable_only=false` into the Incubating package.
+
+params:
+  stable_only: true
+  root_namespace: Nova.OpenTelemetry.SemanticConventions
+  # Root namespaces that are specific to other language runtimes or platforms.
+  excluded_namespaces: [android, cpython, go, ios, jvm, nodejs, v8js]
+
+templates:
+  - pattern: attributes.cs.j2
+    filter: >
+      semconv_grouped_attributes({
+        "exclude_root_namespace": $excluded_namespaces,
+        "stable_only": $stable_only
+      })
+      | map({
+          root_namespace: .root_namespace,
+          attributes: .attributes,
+          stable_only: $stable_only,
+          csharp_namespace: (if $stable_only then $root_namespace else $root_namespace + ".Incubating" end)
+        })
+    application_mode: each
+
+comment_formats:
+  xmldoc:
+    format: html
+    prefix: "/// "
+    old_style_paragraph: false
+    omit_closing_li: false
+    inline_code_snippet: "<c>{{code}}</c>"
+    block_code_snippet: "<code>{{code}}</code>"
+    trim: true
+    remove_trailing_dots: false
+
+default_comment_format: xmldoc
+
+whitespace_control:
+  trim_blocks: true
+  lstrip_blocks: true

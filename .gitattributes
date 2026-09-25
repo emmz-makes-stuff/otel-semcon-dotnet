@@ -1,0 +1,4 @@
+* text=auto eol=lf
+
+# Weaver output: collapsed in GitHub diffs and excluded from language stats.
+src/*/Generated/** linguist-generated=true
