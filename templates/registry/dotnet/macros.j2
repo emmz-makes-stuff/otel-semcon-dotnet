@@ -13,12 +13,15 @@
 {%- endmacro %}
 
 {#- Markdown from the registry rendered as XML doc content, prefixed with `/// ` and indented.
-    XML-special characters are escaped before rendering so code spans such as `<key>` stay
-    well-formed. HTML paragraphs and lists become their XML doc equivalents. -#}
+    The markdown renderer writes both code spans and text verbatim (decoding any entities),
+    so XML-special characters are swapped for placeholders before rendering and turned into
+    entities afterwards. HTML paragraphs and lists become their XML doc equivalents. -#}
 {% macro doc_text(text, indent) -%}
 {{ " " * indent }}{{ text
-  | replace("&", "&amp;") | replace("<", "&lt;") | replace(">", "&gt;")
+  | replace("&", "⟪amp⟫") | replace("<", "⟪lt⟫") | replace(">", "⟪gt⟫")
   | comment(indent=indent)
+  | replace("⟪amp⟫", "&amp;") | replace("⟪lt⟫", "&lt;") | replace("⟪gt⟫", "&gt;")
+  | regex_replace("&lt;(https?://[^&\\s]+)&gt;", "<a href=\"$1\">$1</a>")
   | replace("<p>", "<para>") | replace("</p>", "</para>")
   | replace("<ul>", "<list type=\"bullet\">") | replace("</ul>", "</list>")
   | replace("<ol>", "<list type=\"number\">") | replace("</ol>", "</list>")

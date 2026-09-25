@@ -24,9 +24,9 @@ public static class ExceptionIncubatingAttributes
     /// <para>The exception message.</para>
     /// </summary>
     /// <remarks>
-    /// <para>> [!WARNING]
-    /// >
-    /// > This attribute may contain sensitive information.</para>
+    /// <para>&gt; [!WARNING]
+    /// &gt;
+    /// &gt; This attribute may contain sensitive information.</para>
     /// </remarks>
     [Obsolete("Use Nova.OpenTelemetry.SemanticConventions.ExceptionAttributes.ExceptionMessage instead.")]
     public const string ExceptionMessage = "exception.message";

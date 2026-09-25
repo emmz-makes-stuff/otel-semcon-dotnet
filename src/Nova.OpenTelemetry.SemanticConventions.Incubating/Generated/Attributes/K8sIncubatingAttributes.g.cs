@@ -37,10 +37,10 @@ public static class K8sIncubatingAttributes
     /// UUIDs as standardized by
     /// <a href="https://www.itu.int/ITU-T/studygroups/com17/oid.html">ISO/IEC 9834-8 and ITU-T X.667</a>.
     /// Which states:</para>
-    /// <para>> If generated according to one of the mechanisms defined in Rec.
-    /// > ITU-T X.667 | ISO/IEC 9834-8, a UUID is either guaranteed to be
-    /// > different from all other UUIDs generated before 3603 A.D., or is
-    /// > extremely likely to be different (depending on the mechanism chosen).</para>
+    /// <para>&gt; If generated according to one of the mechanisms defined in Rec.
+    /// &gt; ITU-T X.667 | ISO/IEC 9834-8, a UUID is either guaranteed to be
+    /// &gt; different from all other UUIDs generated before 3603 A.D., or is
+    /// &gt; extremely likely to be different (depending on the mechanism chosen).</para>
     /// <para>Therefore, UIDs between clusters should be extremely unlikely to
     /// conflict.</para>
     /// </remarks>

@@ -22,16 +22,16 @@ public static class DeviceIncubatingAttributes
     /// However, it might be resettable by the user for all apps on a device.
     /// Hardware IDs (e.g. vendor-specific serial number, IMEI or MAC address) MAY be used as values.</para>
     /// <para>More information about Android identifier best practices can be found in the <a href="https://developer.android.com/training/articles/user-data-ids">Android user data IDs guide</a>.</para>
-    /// <para>> [!WARNING]
-    /// >
-    /// > This attribute may contain sensitive (PII) information. Caution should be taken when storing personal data or anything which can identify a user. GDPR and data protection laws may apply,
-    /// > ensure you do your own due diligence.
-    /// >
-    /// > Due to these reasons, this identifier is not recommended for consumer applications and will likely result in rejection from both Google Play and App Store.
-    /// > However, it may be appropriate for specific enterprise scenarios, such as kiosk devices or enterprise-managed devices, with appropriate compliance clearance.
-    /// > Any instrumentation providing this identifier MUST implement it as an opt-in feature.
-    /// >
-    /// > See <a href="/docs/registry/attributes/app.md#app-installation-id"><c>app.installation.id</c></a> for a more privacy-preserving alternative.</para>
+    /// <para>&gt; [!WARNING]
+    /// &gt;
+    /// &gt; This attribute may contain sensitive (PII) information. Caution should be taken when storing personal data or anything which can identify a user. GDPR and data protection laws may apply,
+    /// &gt; ensure you do your own due diligence.
+    /// &gt;
+    /// &gt; Due to these reasons, this identifier is not recommended for consumer applications and will likely result in rejection from both Google Play and App Store.
+    /// &gt; However, it may be appropriate for specific enterprise scenarios, such as kiosk devices or enterprise-managed devices, with appropriate compliance clearance.
+    /// &gt; Any instrumentation providing this identifier MUST implement it as an opt-in feature.
+    /// &gt;
+    /// &gt; See <a href="/docs/registry/attributes/app.md#app-installation-id"><c>app.installation.id</c></a> for a more privacy-preserving alternative.</para>
     /// </remarks>
     public const string DeviceId = "device.id";
 

@@ -24,9 +24,9 @@ public static class ExceptionAttributes
     /// <para>The exception message.</para>
     /// </summary>
     /// <remarks>
-    /// <para>> [!WARNING]
-    /// >
-    /// > This attribute may contain sensitive information.</para>
+    /// <para>&gt; [!WARNING]
+    /// &gt;
+    /// &gt; This attribute may contain sensitive information.</para>
     /// </remarks>
     public const string ExceptionMessage = "exception.message";
 

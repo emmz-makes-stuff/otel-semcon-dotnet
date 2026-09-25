@@ -24,6 +24,21 @@ templates:
         })
     application_mode: each
 
+  - pattern: metrics.cs.j2
+    filter: >
+      semconv_grouped_metrics({
+        "exclude_root_namespace": $excluded_namespaces,
+        "stable_only": $stable_only
+      })
+      | map({
+          root_namespace: .root_namespace,
+          metrics: [.metrics[] | select(.annotations.code_generation.exclude | not)],
+          stable_only: $stable_only,
+          csharp_namespace: (if $stable_only then $root_namespace else $root_namespace + ".Incubating" end)
+        })
+      | map(select(.metrics | length > 0))
+    application_mode: each
+
 comment_formats:
   xmldoc:
     format: html

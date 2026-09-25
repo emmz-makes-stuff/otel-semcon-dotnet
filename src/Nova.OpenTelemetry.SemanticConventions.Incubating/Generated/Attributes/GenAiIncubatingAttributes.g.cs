@@ -103,8 +103,8 @@ public static class GenAiIncubatingAttributes
     /// <para>Messages MUST be provided in the order they were sent to the model.
     /// Instrumentations MAY provide a way for users to filter or truncate
     /// input messages.</para>
-    /// <para>> [!Warning]
-    /// > This attribute is likely to contain sensitive information including user/PII data.</para>
+    /// <para>&gt; [!Warning]
+    /// &gt; This attribute is likely to contain sensitive information including user/PII data.</para>
     /// <para>See <a href="https://github.com/open-telemetry/semantic-conventions/blob/v1.41.0/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes">Recording content on attributes</a>
     /// section for more details.</para>
     /// </remarks>
@@ -255,8 +255,8 @@ public static class GenAiIncubatingAttributes
     /// format is not supported and SHOULD be recorded in structured form otherwise.</para>
     /// <para>Instrumentations MAY provide a way for users to filter or truncate
     /// output messages.</para>
-    /// <para>> [!Warning]
-    /// > This attribute is likely to contain sensitive information including user/PII data.</para>
+    /// <para>&gt; [!Warning]
+    /// &gt; This attribute is likely to contain sensitive information including user/PII data.</para>
     /// <para>See <a href="https://github.com/open-telemetry/semantic-conventions/blob/v1.41.0/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes">Recording content on attributes</a>
     /// section for more details.</para>
     /// </remarks>
@@ -544,8 +544,8 @@ public static class GenAiIncubatingAttributes
     /// <para>The query text used for retrieval.</para>
     /// </summary>
     /// <remarks>
-    /// <para>> [!Warning]
-    /// > This attribute may contain sensitive information.</para>
+    /// <para>&gt; [!Warning]
+    /// &gt; This attribute may contain sensitive information.</para>
     /// </remarks>
     [Obsolete("Moved to the [OpenTelemetry GenAI semantic conventions repository](https://github.com/open-telemetry/semantic-conventions-genai).")]
     public const string GenAiRetrievalQueryText = "gen_ai.retrieval.query.text";
@@ -681,8 +681,8 @@ public static class GenAiIncubatingAttributes
     /// format is not supported and SHOULD be recorded in structured form otherwise.</para>
     /// <para>Instrumentations MAY provide a way for users to filter or truncate
     /// system instructions.</para>
-    /// <para>> [!Warning]
-    /// > This attribute may contain sensitive information.</para>
+    /// <para>&gt; [!Warning]
+    /// &gt; This attribute may contain sensitive information.</para>
     /// <para>See <a href="https://github.com/open-telemetry/semantic-conventions/blob/v1.41.0/docs/gen-ai/gen-ai-spans.md#recording-content-on-attributes">Recording content on attributes</a>
     /// section for more details.</para>
     /// </remarks>
@@ -721,8 +721,8 @@ public static class GenAiIncubatingAttributes
     /// <para>Parameters passed to the tool call.</para>
     /// </summary>
     /// <remarks>
-    /// <para>> [!WARNING]
-    /// > This attribute may contain sensitive information.</para>
+    /// <para>&gt; [!WARNING]
+    /// &gt; This attribute may contain sensitive information.</para>
     /// <para>It's expected to be an object - in case a serialized string is available
     /// to the instrumentation, the instrumentation SHOULD do the best effort to
     /// deserialize it to an object. When recorded on spans, it MAY be recorded as a JSON string if structured format is not supported and SHOULD be recorded in structured form otherwise.</para>
@@ -740,8 +740,8 @@ public static class GenAiIncubatingAttributes
     /// <para>The result returned by the tool call (if any and if execution was successful).</para>
     /// </summary>
     /// <remarks>
-    /// <para>> [!WARNING]
-    /// > This attribute may contain sensitive information.</para>
+    /// <para>&gt; [!WARNING]
+    /// &gt; This attribute may contain sensitive information.</para>
     /// <para>It's expected to be an object - in case a serialized string is available
     /// to the instrumentation, the instrumentation SHOULD do the best effort to
     /// deserialize it to an object. When recorded on spans, it MAY be recorded as a JSON string if structured format is not supported and SHOULD be recorded in structured form otherwise.</para>

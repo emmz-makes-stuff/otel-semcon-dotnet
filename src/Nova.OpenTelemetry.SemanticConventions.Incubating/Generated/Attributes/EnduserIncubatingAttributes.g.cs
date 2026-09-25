@@ -19,8 +19,8 @@ public static class EnduserIncubatingAttributes
     /// </summary>
     /// <remarks>
     /// <para>Unique identifier of an end user in the system.</para>
-    /// <para>> [!Warning]
-    /// > This field contains sensitive (PII) information.</para>
+    /// <para>&gt; [!Warning]
+    /// &gt; This field contains sensitive (PII) information.</para>
     /// </remarks>
     public const string EnduserId = "enduser.id";
 
@@ -29,8 +29,8 @@ public static class EnduserIncubatingAttributes
     /// </summary>
     /// <remarks>
     /// <para>Pseudonymous identifier of an end user.</para>
-    /// <para>> [!Warning]
-    /// > This field contains sensitive (linkable PII) information.</para>
+    /// <para>&gt; [!Warning]
+    /// &gt; This field contains sensitive (linkable PII) information.</para>
     /// </remarks>
     public const string EnduserPseudoId = "enduser.pseudo.id";
 
