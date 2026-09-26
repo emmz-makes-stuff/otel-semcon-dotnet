@@ -1,0 +1,82 @@
+name: CI
+
+# Pushes and pull requests build, test and pack. A version tag (v1.44.0) also publishes to NuGet.
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      # The package version is the semconv version in Directory.Build.props; the tag must agree.
+      - name: Check tag matches package version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          version="$(dotnet msbuild src/SemanticConventions/SemanticConventions.csproj -getProperty:Version)"
+          if [[ "$GITHUB_REF_NAME" != "v$version" ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package version $version (Directory.Build.props)."
+            exit 1
+          fi
+
+      - run: dotnet restore
+
+      # Generates the sources with Weaver in Docker (scripts/generate.sh) before compiling.
+      - run: dotnet build --configuration Release --no-restore -p:ContinuousIntegrationBuild=true
+
+      - run: dotnet test --configuration Release --no-build
+
+      - run: dotnet pack --configuration Release --no-build --output artifacts
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: packages
+          path: artifacts/*.nupkg
+          if-no-files-found: error
+
+  # Uses NuGet Trusted Publishing: set the NUGET_USER repository variable to the nuget.org
+  # account that owns the trusted publishing policy. Without it (e.g. in a fork) this is skipped.
+  publish:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v') && vars.NUGET_USER != ''
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: packages
+          path: artifacts
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: NuGet login
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ vars.NUGET_USER }}
+
+      - name: Push to NuGet
+        run: >-
+          dotnet nuget push "artifacts/*.nupkg"
+          --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
